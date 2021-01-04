@@ -1,4 +1,3 @@
 #DS
 
-
-trying to do an backup 
+open madi nodu..idu pakka local maalu
