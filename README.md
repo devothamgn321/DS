@@ -1,3 +1,3 @@
 #DS
 
-open madi nodu..idu pakka local maalu
+open madi nodu..tappu idre sari madi hordu guru!!
