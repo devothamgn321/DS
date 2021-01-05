@@ -24,7 +24,7 @@ void main()
 
    while(1)
    {
-      printf("\nenter choice:\n1:InsertByOrder\n2:DeleteByKey\n3:SearchByPos\n4:display\n");
+      printf("\nenter choice:\n1:InsertByOrder\n2:DeleteByKey\n3:SearchByPos\n4:display\n5:Exit\n");
       scanf("%d",&ch);
       switch(ch)
       {
@@ -33,8 +33,8 @@ void main()
 	case 2: DeleteKey(Head);Disp(Head);break;
 	case 3: Search(Head); break;
 	case 4: Disp(Head);break;
-	
-	default:exit(0);
+  case 5: exit(0);
+	default: printf("invalid input\n");
      }
  }
 
@@ -111,7 +111,7 @@ void Search(node H)
        printf("Node does not exist\n");
        else
 
-	 printf("node with the info %dwhich  is present at position %d \n", TN->info, pos);
+	 printf("node with the info %d is present at position %d \n", TN->info, pos);
 }
 
 void InsertByOrder(node H)
