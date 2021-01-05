@@ -7,8 +7,9 @@ struct NODE
   struct NODE *rlink;
 };
 typedef struct NODE * node;
-void InsertFront(node);
 
+
+void InsertFront(node);
 void InsertRear(node);
 void DeleteFront(node);
 void DeleteRear(node);
