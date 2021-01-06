@@ -1,3 +1,9 @@
+/*implement circular double linked list with header node to perfrom 
+1. insert by order
+2.delete by position
+3.search by key */
+
+
 #include<stdio.h>
 #include<stdlib.h>
 struct NODE
@@ -8,37 +14,37 @@ struct NODE
 };
 typedef struct NODE * node;
 
-
-void Disp();
+void insertByOrder(node);
 void DeleteKey(node);
-void Search(node);
-void InsertByOrder(node);
+void searchByPosition(node);
+void Disp(node);
 
 void main()
 {
    int ch;
-   node Head , NH = NULL;
+   node Head;
    Head = (node)malloc(sizeof(struct NODE));
    Head->info = 0;
    Head->llink=Head->rlink = Head; 
-
-   while(1)
+  
+   for(;;)
    {
-      printf("\nenter choice:\n1:InsertByOrder\n2:DeleteByKey\n3:SearchByPos\n4:display\n5:Exit\n");
+      printf("\nenter choice:\n1:InsertByOrder\n2:DeleteByKey\n3:SearchByPosition\n4:display\n");
       scanf("%d",&ch);
       switch(ch)
       {
 	
-	case 1: InsertByOrder(Head); Disp(Head);break; 
-	case 2: DeleteKey(Head);Disp(Head);break;
-	case 3: Search(Head); break;
-	case 4: Disp(Head);break;
-  case 5: exit(0);
-	default: printf("invalid input\n");
+    case 1: insertByOrder(Head);Disp(Head);break;
+    case 2:  DeleteKey(Head); Disp(Head);break;
+    case 3: searchByPosition(Head);Disp(Head);break;
+    case 4: Disp(Head); break;
+	default:exit(0);
+
      }
  }
 
  }
+
 
   void Disp(node H)
    {    node TP;
@@ -85,54 +91,69 @@ void DeleteKey(node H)
 	 H->info--;
        }
 }
-void Search(node H)
+
+void insertByOrder(node H)
+{
+    node NN, TN, PN;
+    NN = (node)malloc(sizeof(struct NODE));
+    printf("Enter the element to be Entered: ");
+    scanf("%d", &NN->info);
+    TN=H->rlink;PN=NULL;
+    H->info++;
+
+    if(TN==H){
+        H->rlink=NN;
+        NN->llink=TN;
+        H->llink=TN;
+        NN->rlink=TN;
+        return;
+    }
+
+    if(TN->info>NN->info)
+    {
+        H->rlink=NN;
+        NN->llink=H;
+        TN->llink=NN;
+        NN->rlink=TN;
+        return;
+    }
+    while(TN!=H && TN->info<NN->info)
+    {
+        PN=TN;
+        TN=TN->rlink;
+    }
+    if(TN == NULL){
+        printf("Invalid input\n");
+    }
+    PN->rlink = NN;
+    NN->llink=PN;
+    TN->llink=NN;
+    NN->rlink=TN;
+}
+
+void searchByPosition(node H)
 {
     node  TN;
-    int pos, info;
+    int pos, cnt;
      if(H->info==0)
        {
 	 printf("empty\n");
 	 return ;
        }
-       printf("enter the position of the node to be searched\n");
-       scanf("%d", &info);
-      TN = H->rlink;
-      pos = 1;
-	  if(info<1 && info>H->info)
-	  {
-		  printf("node at %d pos not exist\n",info);
-		  return;
-	  }
-      while(TN!=H && pos<info)
-      {
-	  TN=TN->rlink;  pos++;
+	printf("\nenter position   from 1 to %d:" ,H->info);
+       scanf("%d",&pos);
+       if(pos>=1 && pos<=H->info)
+       {
+	 TN = H->rlink;
+	 cnt = 1;
+	 while(cnt !=pos)
+	 {
+	   TN=TN->rlink ;
+	   cnt++;
+	 }
+	 printf("%d is present at position %d", TN->info, pos);
       }
-       if(TN == H)
-       printf("Node does not exist\n");
-       else
-
-	 printf("node with the info %d is present at position %d \n", TN->info, pos);
+      else
+      printf("Invalid position retry\n");
 }
-
-void InsertByOrder(node H)
-    {
-       node NN = (node)malloc(sizeof(struct NODE));
-       printf("enter info field:");
-       scanf("%d",&NN->info);
-      
-       node T = H->rlink;
-       while(T->info < NN->info  && T!= H)
-         T=T->rlink;
-       
-       NN->rlink  = T;
-       NN->llink = T->llink;
-       T->llink = NN;
-       NN->llink->rlink = NN;
-       H->info ++;
-
- }
- 
-
-
-
 
